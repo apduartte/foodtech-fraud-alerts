@@ -1,130 +1,204 @@
-# 🚨 foodtech-fraud-alerts
-![Java](https://img.shields.io/badge/Java-21-red?logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-brightgreen?logo=springboot&logoColor=white)
-![Spring Web](https://img.shields.io/badge/Spring%20Web-REST-brightgreen?logo=spring&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Container-2496ED?logo=docker&logoColor=white)
-![Docker Compose](https://img.shields.io/badge/Docker%20Compose-Orchestration-2496ED?logo=docker&logoColor=white)
-![AWS](https://img.shields.io/badge/AWS-Cloud-orange?logo=amazonaws&logoColor=white)
-![SQS](https://img.shields.io/badge/Amazon%20SQS-Messaging-orange?logo=amazonaws&logoColor=white)
-![Event Driven](https://img.shields.io/badge/Architecture-Event--Driven-purple)
-![REST API](https://img.shields.io/badge/API-REST-lightgrey)
-![Maven](https://img.shields.io/badge/Maven-Build-C71A36?logo=apachemaven&logoColor=white)
-![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?logo=git&logoColor=white)
+# 🚀 FoodTech Fraud Alerts
 
-Microserviço **back-end em Java** projetado para o **processamento assíncrono de alertas de fraude**, utilizando **Spring Boot**, conceitos de **Cloud AWS**, **arquitetura orientada a eventos** e **boas práticas de sistemas distribuídos**.
+Arquitetura escalável e resiliente para detecção e processamento de alertas de fraude em tempo real na AWS
 
-O projeto demonstra como **projetar, desenvolver e operar um microserviço desacoplado, confiável e escalável**, comum em plataformas digitais de **alta escala**, como **foodtechs, marketplaces e sistemas financeiros**.
+![AWS](https://img.shields.io/badge/AWS-Cloud-%23FF9900?style=for-the-badge\&logo=amazonaws\&logoColor=white)
+![Java](https://img.shields.io/badge/Java-21-%23ED8B00?style=for-the-badge\&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/SpringBoot-Framework-%236DB33F?style=for-the-badge\&logo=springboot)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-%237B42BC?style=for-the-badge\&logo=terraform)
+![Docker](https://img.shields.io/badge/Docker-Container-%230db7ed?style=for-the-badge\&logo=docker)
 
 ---
 
-## 🏗️ Arquitetura AWS (Event-Driven)
+## 📌 Visão Geral
 
-![Arquitetura AWS](docs/images/achitectecture-event-driven.png)
+O **FoodTech Fraud Alerts** é uma plataforma orientada a eventos para ingestão, processamento e persistência de alertas de fraude em tempo real.
 
----
-
-## 📌 Contexto do Problema
-
-Em sistemas que processam grandes volumes de dados, tratar alertas críticos (como fraude) de forma síncrona pode gerar **gargalos**, impactar a **performance** e prejudicar a **experiência do usuário**.
-
-Para resolver esse cenário, foi adotado um modelo **assíncrono e orientado a eventos**, onde:
-
-- O alerta é enviado de forma desacoplada do processamento  
-- O sistema ganha **velocidade, escalabilidade e resiliência**  
-- O processamento continua mesmo diante de falhas pontuais  
-
-Essa abordagem reflete arquiteturas modernas utilizadas em ambientes reais de produção.
+Projetado com foco em **escalabilidade, resiliência e desacoplamento**, o sistema utiliza mensageria para garantir processamento assíncrono e tolerância a falhas.
 
 ---
 
-## 👥 Cliente do Serviço (Client System)
+## 🧠 Princípios Arquiteturais
 
-Este microserviço **não é consumido diretamente por usuários finais (pessoa física)**.
-
-O **cliente da API** é um **sistema interno da plataforma foodtech**, responsável por domínios como:
-
-- pedidos  
-- pagamentos  
-- antifraude  
-- backoffice e operações  
-
-Esses sistemas detectam eventos suspeitos e enviam alertas para este serviço, que realiza o processamento de forma **assíncrona**, sem interface gráfica ou interação humana direta.
-
-Essa arquitetura é típica de **plataformas distribuídas de alta escala**, como iFood, Magalu e ecossistemas financeiros.
+* **Event-Driven Architecture**
+* **Loose Coupling**
+* **High Availability**
+* **Scalability by Design**
+* **Security by Default**
+* **Observability First**
 
 ---
 
-## 🧱 Visão Geral da Arquitetura
+## 🏗️ Arquitetura
 
-### Fluxo assíncrono orientado a eventos
+### 🔄 Fluxo de Alto Nível
 
-1. Um sistema cliente envia uma requisição de alerta de fraude  
-2. A API valida e persiste o alerta no banco de dados PostgreSQL  
-3. Um evento é publicado em uma fila de mensagens  
-4. Um serviço Worker consome a mensagem de forma assíncrona  
-5. O alerta é processado conforme regras de negócio  
-6. Em caso de falha, a mensagem é redirecionada para uma **Dead Letter Queue (DLQ)**  
-
-Essa arquitetura promove:
-
-- **desacoplamento** entre serviços  
-- **escalabilidade horizontal**  
-- **isolamento de falhas**  
-- **confiabilidade operacional**  
+```text
+Client → API Gateway → Fraud Alerts API → SQS → Worker → RDS
+                                          ↓
+                                         DLQ
+```
 
 ---
 
-## 🛠️ Stack Tecnológica
+## 🧩 Componentes
 
-### Back-end
-- Java 21  
-- Spring Boot 3  
-- Spring Web  
-- Spring Data JPA  
-- APIs REST  
-- Programação Orientada a Objetos  
-- Princípios **SOLID**  
+### 🌐 Entrada
 
-### Mensageria e Processamento Assíncrono
-- AWS SQS (simulado localmente com **LocalStack**)  
-- Dead Letter Queue (DLQ)  
-- Arquitetura orientada a eventos  
-- Retry e tolerância a falhas  
-
-### Banco de Dados
-- PostgreSQL  
-- JPA / Hibernate  
-
-### Infraestrutura & DevOps
-- Docker  
-- Docker Compose  
-- Terraform *(Infraestrutura como Código – roadmap)*  
-- GitHub Actions *(CI/CD – roadmap)*  
-- Conceitos de Cloud AWS  
-
-### Observabilidade
-- Spring Boot Actuator  
-- Health checks  
-- Logs estruturados  
-- Monitoramento básico  
+* API REST (Spring Boot)
+* API Gateway (opcional)
+* HTTPS (TLS via ACM)
 
 ---
 
-## 📂 Estrutura do Projeto (Monorepo)
+### ⚙️ Processamento
+
+* API Service (ingestão de eventos)
+* Worker Service (processamento assíncrono)
+* Fila (SQS Standard)
+
+---
+
+### 🗄️ Dados
+
+* Amazon RDS PostgreSQL (transacional)
+* Amazon S3 (opcional – histórico / data lake)
+
+---
+
+### 🔐 Segurança
+
+* IAM (princípio do menor privilégio)
+* AWS SSM / Secrets Manager (gestão de segredos)
+* Criptografia em trânsito (TLS)
+* Criptografia em repouso (RDS)
+
+---
+
+### 📊 Observabilidade
+
+* Logs estruturados (JSON)
+* CloudWatch Logs
+* Métricas (latência, erro, throughput)
+* Alarmes (CloudWatch Alarms)
+
+---
+
+## 🔁 Fluxo Detalhado
+
+1. Cliente envia requisição HTTP
+2. API valida e normaliza o payload
+3. Evento é publicado na SQS
+4. Worker consome a mensagem
+5. Processa regras de fraude
+6. Persiste no RDS
+7. Em caso de falha → DLQ
+
+---
+
+## 📈 Confiabilidade (SRE)
+
+### SLIs
+
+* Latência
+* Taxa de erro
+* Throughput
+
+### SLOs
+
+* Disponibilidade: **99.9%**
+* Latência API: **< 200ms**
+* Taxa de erro: **< 1%**
+
+### Estratégias
+
+* Retry com backoff exponencial
+* Dead Letter Queue (DLQ)
+* Idempotência no processamento
+* Health checks
+
+---
+
+## ⚙️ DevOps
+
+### CI/CD
+
+Pipeline automatizado com:
+
+```text
+- Build
+- Test
+- Lint
+- Security Scan
+- Deploy
+```
+
+### Infraestrutura
+
+* Terraform (Infrastructure as Code)
+* Ambientes isolados:
+
+  * dev
+  * staging
+  * prod
+
+---
+
+## 💰 FinOps (Custos)
+
+### Principais drivers
+
+* Execução de containers (ECS/Fargate)
+* Banco de dados (RDS)
+* Mensageria (SQS)
+* Logs (CloudWatch)
+
+### Estratégias
+
+* Auto Scaling
+* Rightsizing
+* Uso sob demanda
+* Ambientes efêmeros
+
+---
+
+## 🧪 Modelo de Dados
+
+Tabela principal:
+
+```sql
+fraud_alerts (
+  id UUID,
+  transaction_id VARCHAR,
+  user_id VARCHAR,
+  risk_score DECIMAL,
+  status VARCHAR,
+  created_at TIMESTAMP
+)
+```
+
+---
+
+## 📂 Estrutura do Projeto
 
 ```text
 foodtech-fraud-alerts/
 │
-├── api-service/          # Microserviço Spring Boot responsável pela ingestão de alertas de fraude
-│   ├── src/main/java     # Código-fonte da aplicação
-│   ├── src/main/resources# Configurações (application.yml)
-│   └── pom.xml           # Gerenciamento de dependências (Maven)
+├── services/
+│   ├── api-service/
+│   ├── worker-service/
 │
-├── worker-service/       # (Roadmap) Serviço consumidor de mensagens para processamento assíncrono
-├── infra/                # (Roadmap) Infraestrutura como Código (Terraform)
-├── docker-compose.yml    # (Roadmap) Ambiente local com PostgreSQL e LocalStack
+├── infra/
+│   ├── modules/
+│   ├── environments/
 │
-├── README.md             # Documentação técnica do projeto
-├── LICENSE               # Licença do projeto
-└── .gitignore            # Arquivos ignorados pelo Git
+├── docs/
+│   ├── architecture.md
+│   ├── runbook.md
+│   ├── decisions.md
+│
+├── .github/workflows/
+│
+├── docker/
+│
+```
