@@ -1,3 +1,4 @@
+
 server:
   port: 8080
 
@@ -6,16 +7,13 @@ spring:
     name: api-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/alerts_db
-    username: postgres
-    password: postgres
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     open-in-view: false
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+    show-sql: false

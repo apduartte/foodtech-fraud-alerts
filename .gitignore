@@ -24,3 +24,29 @@ hs_err_pid*
 replay_pid*
 
 .vs/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Local application configuration
+application-local.yaml
+application-local.yml
+
+# Maven build output
+**/target/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary and backup files
+*.tmp
+*.bak
+*.orig

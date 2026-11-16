@@ -1,7 +1,16 @@
-package br.com.apduarte.apiservice.domain;
+package br.com.apduartte.api_service.domain;
 
-import jakarta.persistence.*;
-        import java.time.Instant;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -9,14 +18,13 @@ import java.util.UUID;
 public class Alert {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false, length = 60)
     private String type;
 
-    @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text")
     private String payload;
 
     @Enumerated(EnumType.STRING)
@@ -27,7 +35,7 @@ public class Alert {
     private Instant createdAt;
 
     protected Alert() {
-        // JPA only
+        // Required by JPA
     }
 
     public Alert(String type, String payload) {
@@ -37,10 +45,34 @@ public class Alert {
         this.createdAt = Instant.now();
     }
 
-    public UUID getId() { return id; }
-    public String getType() { return type; }
-    public String getPayload() { return payload; }
-    public AlertStatus getStatus() { return status; }
-    public Instant getCreatedAt() { return createdAt; }
-}
+    @PrePersist
+    protected void onCreate() {
+        if (this.createdAt == null) {
+            this.createdAt = Instant.now();
+        }
 
+        if (this.status == null) {
+            this.status = AlertStatus.CREATED;
+        }
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public AlertStatus getStatus() {
+        return status;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+}

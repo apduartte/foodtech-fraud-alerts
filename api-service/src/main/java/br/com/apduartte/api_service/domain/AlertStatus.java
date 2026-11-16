@@ -1,6 +1,7 @@
 package br.com.apduartte.api_service.domain;
+
 public enum AlertStatus {
-    CREATEC,
+    CREATED,
     PROCESSING,
     PROCESSED,
     FAILED

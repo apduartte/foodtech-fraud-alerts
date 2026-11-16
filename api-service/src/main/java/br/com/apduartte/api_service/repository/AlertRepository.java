@@ -1,6 +1,6 @@
-package br.com.apduarte.apiservice.repository;
+package br.com.apduartte.api_service.repository;
 
-import br.com.apduarte.apiservice.domain.Alert;
+import br.com.apduartte.api_service.domain.Alert;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

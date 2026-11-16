@@ -1,6 +1,6 @@
 # 🚀 FoodTech Fraud Alerts
 
-Arquitetura escalável e resiliente para detecção e processamento de alertas de fraude em tempo real na AWS
+Projeto de engenharia para construir uma plataforma de detecção e processamento de alertas de fraude, com arquitetura-alvo orientada a eventos na AWS.
 
 ![AWS](https://img.shields.io/badge/AWS-Cloud-%23FF9900?style=for-the-badge\&logo=amazonaws\&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-21-%23ED8B00?style=for-the-badge\&logo=openjdk)
@@ -8,17 +8,22 @@ Arquitetura escalável e resiliente para detecção e processamento de alertas d
 ![Terraform](https://img.shields.io/badge/Terraform-IaC-%237B42BC?style=for-the-badge\&logo=terraform)
 ![Docker](https://img.shields.io/badge/Docker-Container-%230db7ed?style=for-the-badge\&logo=docker)
 
+**Escopo tecnológico:** Os badges representam tecnologias utilizadas na arquitetura-alvo e no ambiente de desenvolvimento. Nem todas estão implementadas ou implantadas atualmente.
 ---
 
 ## 📌 Visão Geral
 
-O **FoodTech Fraud Alerts** é uma plataforma orientada a eventos para ingestão, processamento e persistência de alertas de fraude em tempo real.
+O **FoodTech Fraud Alerts** está em desenvolvimento para demonstrar decisões de arquitetura, implementação e operação de um sistema de alertas de fraude.
 
-Projetado com foco em **escalabilidade, resiliência e desacoplamento**, o sistema utiliza mensageria para garantir processamento assíncrono e tolerância a falhas.
+## Estado atual
+
+A implementação disponível neste repositório é a base inicial da API Spring Boot conectada a PostgreSQL local. A arquitetura com ingestão de eventos, SQS, worker, RDS e implantação AWS é a direção planejada; esses componentes ainda não fazem parte do ambiente executável atual.
+
+O [guia de execução local](docs/local-development.md) mostra como iniciar a API e o PostgreSQL.
 
 ---
 
-## 🧠 Princípios Arquiteturais
+## 🧠 Diretrizes Arquiteturais
 
 * **Event-Driven Architecture**
 * **Loose Coupling**
@@ -29,7 +34,7 @@ Projetado com foco em **escalabilidade, resiliência e desacoplamento**, o siste
 
 ---
 
-## 🏗️ Arquitetura
+## 🏗️ Arquitetura-alvo
 
 ### 🔄 Fluxo de Alto Nível
 
@@ -84,7 +89,7 @@ Client → API Gateway → Fraud Alerts API → SQS → Worker → RDS
 
 ---
 
-## 🔁 Fluxo Detalhado
+## 🔁 Fluxo-alvo proposto
 
 1. Cliente envia requisição HTTP
 2. API valida e normaliza o payload
@@ -96,7 +101,9 @@ Client → API Gateway → Fraud Alerts API → SQS → Worker → RDS
 
 ---
 
-## 📈 Confiabilidade (SRE)
+## 📈 Metas propostas de confiabilidade (SRE)
+
+As métricas e metas abaixo são objetivos de projeto. Ainda não representam medições de uma implantação em produção.
 
 ### SLIs
 
@@ -119,11 +126,11 @@ Client → API Gateway → Fraud Alerts API → SQS → Worker → RDS
 
 ---
 
-## ⚙️ DevOps
+## ⚙️ Evolução planejada de DevOps
 
 ### CI/CD
 
-Pipeline automatizado com:
+Pipeline desejado:
 
 ```text
 - Build
@@ -162,7 +169,7 @@ Pipeline automatizado com:
 
 ---
 
-## 🧪 Modelo de Dados
+## 🧪 Modelo de dados-alvo
 
 Tabela principal:
 
@@ -179,26 +186,27 @@ fraud_alerts (
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📂 Estrutura atual do repositório
 
 ```text
 foodtech-fraud-alerts/
-│
-├── services/
-│   ├── api-service/
-│   ├── worker-service/
-│
-├── infra/
-│   ├── modules/
-│   ├── environments/
-│
+├── api-service/
+│   ├── mvnw
+│   ├── mvnw.cmd
+│   ├── pom.xml
+│   └── src/
+│       ├── main/
+│       │   ├── java/br/com/apduartte/api_service/
+│       │   └── resources/
+│       │       ├── application.yaml
+│       │       └── db/migration/
+│       │           └── V1__create_alerts_table.sql
+│       └── test/
+│           └── java/br/com/apduartte/api_service/
 ├── docs/
-│   ├── architecture.md
-│   ├── runbook.md
-│   ├── decisions.md
-│
-├── .github/workflows/
-│
-├── docker/
-│
+│   ├── evidence/
+│   │   └── evidence-register.md
+│   └── local-development.md
+├── .env.example
+└── docker-compose.yml
 ```
