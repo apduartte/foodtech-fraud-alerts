@@ -41,6 +41,8 @@ FoodTech Fraud Alerts project.
 | EVD-021 | AlertRepositoryTests integration test | 2026-11-14 | Alert insertion and retrieval in PostgreSQL 16.15 using saveAndFlush(), JPA persistence context clearing and lookup by ID; 1 test passed, 0 failures, 0 errors | Validated |
 | EVD-022 | Maven test with current Flyway and Hibernate configuration | 2026-11-16 | Spring Boot 3.5.9, Java 21.0.13 and PostgreSQL 16.15; Flyway history validated; Hibernate initialized with ddl-auto=validate; 2 tests passed, 0 failures, 0 errors, 0 skipped | Validated |
 | EVD-023 | Docker Compose PostgreSQL health validation | 2026-11-16 | Compose configuration validated; PostgreSQL container running on host port 5433; Docker health status confirmed as healthy | Validated |
+| EVD-024 | API request and response DTOs with Jakarta Bean Validation | 2026-11-16 | AlertRequest and AlertResponse implemented; AlertRequest validation tests executed; Maven clean test completed with 6 tests, 0 failures, 0 errors and 0 skipped | Validated |
+
 
 ### 2.1 Flyway Baseline and Migration Traceability
 
